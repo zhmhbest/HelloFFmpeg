@@ -1,10 +1,23 @@
 # -*- coding: utf-8 -*-
 from zhmh.ffmpeg import *
+DRIVE = 'D'
 
-video1 = r"E:\Downloads\【Nancy】MOMOLAND -' BBoom BBoom' - 1.【Nancy】MOMOLAND -' BBoom BBoom'(Av27950104,P1).mp4"
-video2 = r"E:\Downloads\琴弦上.mp4"
+video1 = DRIVE + r":\Downloads\【Nancy】MOMOLAND -' BBoom BBoom' - 1.【Nancy】MOMOLAND -' BBoom BBoom'(Av27950104,P1).mp4"
+video2 = DRIVE + r":\Downloads\琴弦上.mp4"
+output = DRIVE + r":\Downloads\\"
 
 # ff_msg_audio(video1)
-ff_play(video2, shape=(640, 480))
-# ff_detach(video1, r'E:\Downloads\1', r'E:\Downloads\2')
-# ff_pack(r'E:\Downloads\1.264', r'E:\Downloads\2.aac', r'E:\Downloads\3.mp4')
+ff_play(video1, shape=(640, 480))
+
+# # 【分离合并视音频】
+# ff_detach(video1, f'{DRIVE}:\\Downloads\\1', f'{DRIVE}:\\Downloads\\2')
+# ff_pack(f'{DRIVE}:\\Downloads\\1.264', f'{DRIVE}:\\Downloads\\2.aac', f'{DRIVE}:\\Downloads\\3.mp4')
+
+# 【裁剪视频】
+# ff_key_cut(video1, '00:00:00', '00:00:15', output + 'cut1.mp4')
+# ff_key_cut(video1, '00:00:10', 10, output + 'cut2.mp4')
+# ff_cut(video1, '00:00:10', '00:00:15', output + 'cut3.mp4')
+# ff_cut(video1, '00:00:00', 10, output + 'cut4.mp4')
+
+# 【合并视频】
+# ff_combine([output + 'cut3.mp4', output + 'cut4.mp4'], output + 'combine.mp4')
