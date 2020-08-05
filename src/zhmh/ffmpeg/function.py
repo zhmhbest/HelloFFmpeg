@@ -2,7 +2,14 @@ from .ff import ffplay, ffprobe, ffmpeg
 
 
 def ff_play(src, title='', shape=None, loop=0):
-    # ffplay -x 384 -y 216 -window_title "%VideoTitle%" -loop 0 "%VideoSource%"
+    """
+    播放视频
+    :param src:
+    :param title:
+    :param shape:
+    :param loop:
+    :return:
+    """
     if shape is None:
         ffplay([src, '-window_title', title, '-loop', str(loop)])
     else:

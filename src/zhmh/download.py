@@ -1,6 +1,7 @@
 import os
 from urllib import request, response
 from hashlib import sha256
+import zipfile
 
 USER_AGENT = ' '.join([
     "Mozilla/5.0", "(Windows NT 10.0; Win64; x64)",
@@ -14,7 +15,7 @@ def __progress_bar(rate, length=32, single_char1='=', single_char2='.'):
     num_part_r = length - num_part_l
     str_l = single_char1 * num_part_l
     str_r = single_char2 * num_part_r
-    print(f"\r[{str_l}>{str_r}] %.2f%%" % (rate * 100), end='', flush=True)
+    print(f"\r[{str_l}>{str_r}] %.2f%%" % (rate * 100), end='')
 
 
 def download_one_file(url, local):
@@ -45,12 +46,22 @@ def download_one_file(url, local):
             with open(local, 'wb') as f:
                 for i in range(loop_count):
                     f.write(one_response.read(chunk_size))
-                    __progress_bar(i/loop_count)
+                    __progress_bar(i / loop_count)
             with open(f'{local}.ok', 'w') as f_ok:
                 with open(local, 'rb') as f:
                     hexdigest = sha256(f.read()).hexdigest()
                 f_ok.write(hexdigest)
+            print('\nDownloaded')
             return True
         else:
             print(one_response.reason)
     return False
+
+
+def unpack_one_file(packed_file, extract_dir):
+    if not os.path.exists(extract_dir):
+        os.makedirs(extract_dir)
+    file = zipfile.ZipFile(packed_file)
+    for f in file.namelist():
+        file.extract(f, extract_dir)
+    file.close()
