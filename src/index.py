@@ -10,8 +10,8 @@ output = DRIVE + r":\Downloads\\"
 ff_play(video1, shape=(640, 480))
 
 # # 【分离合并视音频】
-# ff_detach(video1, f'{DRIVE}:\\Downloads\\1', f'{DRIVE}:\\Downloads\\2')
-# ff_pack(f'{DRIVE}:\\Downloads\\1.264', f'{DRIVE}:\\Downloads\\2.aac', f'{DRIVE}:\\Downloads\\3.mp4')
+# ff_detach(video1, output + '1', output + '2')
+# ff_pack(output + '1.264', output + '2.aac', output + '3.mp4')
 
 # 【裁剪视频】
 # ff_key_cut(video1, '00:00:00', '00:00:15', output + 'cut1.mp4')
