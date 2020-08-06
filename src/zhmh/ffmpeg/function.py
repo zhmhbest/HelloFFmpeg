@@ -124,3 +124,35 @@ def ff_combine(src_list: list, output: str):
         '-y', output
     ])
     os.remove(dump_list_file)
+
+
+def ff_encode_audio(src_audio: str, output: str,
+                    acodec: str = None, brc: (int, int, int) = None, to_format: str = 'mp3'):
+    """
+    编码Audio为MP3
+    :param src_audio: 音频文件
+    :param output:
+    :param acodec: 编码, eg: copy、pcm_s24le、libmp3lame
+    :param brc: (ab, ar, ac)
+        ab: 码率, eg: 128
+        ar: 采样率, eg: 16
+        ac: 声道, eg: 2
+    :param to_format: 编码为, eg: mp3、ogg、wave、flac
+    :return:
+    """
+    cmd = ['-i', src_audio]
+    # 设置编码器
+    if acodec is not None:
+        cmd.extend(['-acodec', acodec])
+    # 设置码率
+    if brc is not None and 3 == len(brc):
+        cmd.extend([
+            '-ab', f'{str(brc[0])}k',
+            '-ar', f'{str(brc[1])}k',
+            '-ac', str(brc[2]),
+        ])
+    # 设置格式
+    cmd.extend(['-f', to_format])
+    # 输出
+    cmd.extend(['-y', output])
+    ffmpeg(cmd)
