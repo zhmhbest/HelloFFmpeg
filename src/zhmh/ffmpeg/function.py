@@ -50,15 +50,23 @@ def ff_detach(src: str, path_to_video=None, path_to_audio=None):
         ffmpeg(['-i', src, '-vcodec', 'copy', '-vn', f'{path_to_audio}.aac'])
 
 
-def ff_pack(src_video: str, src_audio: str, path_to_save: str):
+def ff_repack(srcs: str or [str, ...], path_to_save: str):
     """
-    合并视频和音频
-    :param src_video:
-    :param src_audio:
+    重新封装视频 或 合并视频和音频
+    :param srcs:
     :param path_to_save:
     :return:
     """
-    ffmpeg(['-i', src_video, '-i', src_audio, '-vcodec', 'copy', '-acodec', 'copy', path_to_save])
+    cmd = []
+    if isinstance(srcs, list):
+        for src in srcs:
+            cmd.append('-i')
+            cmd.append(src)
+    else:
+        cmd.append('-i')
+        cmd.append(srcs)
+    cmd.extend(['-vcodec', 'copy', '-acodec', 'copy', path_to_save])
+    ffmpeg(cmd)
 
 
 def ff_key_cut(src: str, start_time, duration_or_end_time, output: str):
@@ -126,18 +134,21 @@ def ff_combine(src_list: list, output: str):
     os.remove(dump_list_file)
 
 
-def ff_encode_audio(src_audio: str, output: str,
-                    acodec: str = None, brc: (int, int, int) = None, to_format: str = 'mp3'):
+def ff_encode_audio(
+        src_audio: str, output: str, to_format: str,
+        acodec: str = None,
+        brc: (int, int, int) = None
+):
     """
     编码Audio为MP3
     :param src_audio: 音频文件
     :param output:
+    :param to_format: 编码为, eg: mp3、ogg、wave、flac
     :param acodec: 编码, eg: copy、pcm_s24le、libmp3lame
     :param brc: (ab, ar, ac)
         ab: 码率, eg: 128
         ar: 采样率, eg: 16
         ac: 声道, eg: 2
-    :param to_format: 编码为, eg: mp3、ogg、wave、flac
     :return:
     """
     cmd = ['-i', src_audio]
@@ -152,7 +163,5 @@ def ff_encode_audio(src_audio: str, output: str,
             '-ac', str(brc[2]),
         ])
     # 设置格式
-    cmd.extend(['-f', to_format])
-    # 输出
-    cmd.extend(['-y', output])
+    cmd.extend(['-f', to_format, '-y', output])
     ffmpeg(cmd)
