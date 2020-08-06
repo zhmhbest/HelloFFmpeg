@@ -165,3 +165,25 @@ def ff_encode_audio(
     # 设置格式
     cmd.extend(['-f', to_format, '-y', output])
     ffmpeg(cmd)
+
+
+def ff_encode_video_crf(
+        src_video: str, output: str, crf: int
+):
+    """
+    编码视频ByCRF
+    :param src_video:
+    :param output:
+    :param crf: Constant Rate Factor{0 ~ 51}, advance{18 ~ 28}, 越大越差
+    :return:
+    """
+    cmd = ['-i', src_video, '-vcodec', 'libx264', '-acodec', 'copy']
+    cmd.extend(['-crf', str(crf)])
+    cmd.extend(['-y', output])
+    ffmpeg(cmd)
+
+
+def ff_encode_video_2pass(
+        src_video: str, output: str
+):
+    pass
