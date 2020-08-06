@@ -22,7 +22,7 @@ output = DRIVE + r":\Downloads\\"
 # 【合并视频】
 # ff_combine([output + 'cut3.mp4', output + 'cut4.mp4'], output + 'combine.mp4')
 
-# 【编码MP3】
+# 【编码音频】
 # ff_encode_audio(output + '2.aac', output + '2.mp3')
 # ff_encode_audio(output + '2.aac', output + '2_128.mp3', brc=(128, 16, 2))
 # ff_encode_audio(output + '2.aac', output + '2.ogg', to_format='ogg')
