@@ -179,11 +179,18 @@ def ff_encode_video_crf(
     """
     cmd = ['-i', src_video, '-vcodec', 'libx264', '-acodec', 'copy']
     cmd.extend(['-crf', str(crf)])
-    cmd.extend(['-y', output])
+    cmd.extend(['-f', 'mp4', '-y', output])
     ffmpeg(cmd)
 
 
 def ff_encode_video_2pass(
-        src_video: str, output: str
+        src_video: str, output: str,
+        vb: int
 ):
-    pass
+    cmd = ['-i', src_video, '-vcodec', 'libx264', '-vb', f'{vb}k']
+    cmd1 = cmd.copy()
+    cmd1.extend(['-an', '-pass', '1', '-f', 'mp4', '-y', 'NUL'])
+    ffmpeg(cmd1)
+    cmd2 = cmd.copy()
+    cmd2.extend(['-acodec', 'copy', '-pass', '2', '-f', 'mp4', '-y', output])
+    ffmpeg(cmd2)

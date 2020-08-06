@@ -30,5 +30,5 @@ output = DRIVE + ":\\Downloads\\"
 # ff_encode_audio(output + '2.aac', output + '2.flac', to_format='flac')
 
 # 【编码视频】
-# ff_encode_video_crf(video1, output + 'en.mp4', 28)
-
+# ff_encode_video_crf(video1, output + 'en1.mp4', 28)
+# ff_encode_video_2pass(video1, output + 'en2.mp4', 1200)
