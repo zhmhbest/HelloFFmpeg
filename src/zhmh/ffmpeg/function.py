@@ -6,8 +6,8 @@ def ff_play(src: str, title='', shape=None, loop=0):
     播放视频
     :param src:
     :param title:
-    :param shape:
-    :param loop:
+    :param shape: 窗口尺寸
+    :param loop: 循环几次，0表示一直循环
     :return:
     """
     if shape is None:
@@ -74,8 +74,8 @@ def ff_key_cut(src: str, start_time, duration_or_end_time, output: str):
     关键帧裁剪视频
     但会造成几秒的误差，只能落在关键帧上
     :param src:
-    :param start_time:
-    :param duration_or_end_time:
+    :param start_time: 开始时间
+    :param duration_or_end_time: 持续时间 或 结束时间
     :param output:
     :return:
     """
@@ -93,8 +93,8 @@ def ff_cut(src: str, start_time, duration_or_end_time, output: str):
     """
     精准裁剪
     :param src:
-    :param start_time:
-    :param duration_or_end_time:
+    :param start_time: 开始时间
+    :param duration_or_end_time: 持续时间 或 结束时间
     :param output:
     :return:
     """
@@ -113,8 +113,8 @@ def ff_cut(src: str, start_time, duration_or_end_time, output: str):
 def ff_combine(src_list: list, output: str):
     """
     合并多个视频
-    :param src_list:
-    :param output:
+    :param src_list: [视频地址1, 视频地址2, ...]
+    :param output: 输出地址
     :return:
     """
     import random
@@ -140,9 +140,9 @@ def ff_encode_audio(
         brc: (int, int, int) = None
 ):
     """
-    编码Audio为MP3
-    :param src_audio: 音频文件
-    :param output:
+    编码Audio
+    :param src_audio: 音频文件地址
+    :param output: 输出地址
     :param to_format: 编码为, eg: mp3、ogg、wave、flac
     :param acodec: 编码, eg: copy、pcm_s24le、libmp3lame
     :param brc: (ab, ar, ac)
@@ -172,8 +172,8 @@ def ff_encode_video_crf(
 ):
     """
     编码视频ByCRF
-    :param src_video:
-    :param output:
+    :param src_video: 视频文件地址
+    :param output: 输出地址
     :param crf: Constant Rate Factor{0 ~ 51}, advance{18 ~ 28}, 越大越差
     :return:
     """
@@ -187,6 +187,13 @@ def ff_encode_video_2pass(
         src_video: str, output: str,
         vb: int
 ):
+    """
+    编码视频By2Pass
+    :param src_video: 视频文件地址
+    :param output: 输出地址
+    :param vb: 比特率大小，越大视频越清晰，占用更大空间
+    :return:
+    """
     cmd = ['-i', src_video, '-vcodec', 'libx264', '-vb', f'{vb}k']
     cmd1 = cmd.copy()
     cmd1.extend(['-an', '-pass', '1', '-f', 'mp4', '-y', 'NUL'])
