@@ -12,7 +12,7 @@ if __name__ == '__main__':
     ff_play(video1, shape=(640, 480))
 
     # 【重新封装视频】
-    ff_repack(video1, output + 'BBoom.flv')
+    ff_repack(video1, output + 'BBoom2.flv')
 
     # 【分离合并视音频】
     ff_detach(video1, output + '1', output + '2')

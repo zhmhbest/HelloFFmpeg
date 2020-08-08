@@ -9,7 +9,9 @@ import subprocess
 
 def __get_version_location(version):
     import platform
-    from zhmh.download import download_one_file, unpack_one_file
+    # from zhmh.download import download_one_file, unpack_one_file
+    # pip install python-zhmh -i https://pypi.org/simple
+    from pyzhmh import download_one_file, unpack_one_file
     __architecture = platform.architecture()
     if 'WindowsPE' != __architecture[1]:  # 仅支持Windows系统
         raise Exception("Windows platform only!")
@@ -22,7 +24,7 @@ def __get_version_location(version):
             os.path.join(current_directory, f"ffmpeg-{version}-{bit}-shared.zip")
         ffmpeg_builds_url = \
             f"https://ffmpeg.zeranoe.com/builds/{bit}/shared/ffmpeg-{version}-{bit}-shared.zip"
-        if download_one_file(ffmpeg_builds_url, ffmpeg_builds_zip):
+        if download_one_file(ffmpeg_builds_zip, {'url': ffmpeg_builds_url}):
             unpack_one_file(ffmpeg_builds_zip, ffmpeg_directory)
         else:
             raise Exception(f"Can not find ffmpeg@{version}.")
